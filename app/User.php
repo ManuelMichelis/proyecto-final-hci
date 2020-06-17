@@ -10,13 +10,19 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $table = 'usuarios';
+    protected $primaryKey = 'email';
+
+    public $incrementing = false;
+
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'email', 'password', 'type', 'legajo',
     ];
 
     /**
@@ -36,4 +42,46 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * Define la relacion usuario-empleado (un usuario del sistema se asocia a un único empleado)
+     */
+
+    public function empleado ()
+    {
+        return $this->belongsTo(Empleado::class, 'legajo_empleado', 'legajo');
+    }
+
+
+    public function nombreEmpleado ()
+    {
+        return $this->empleado->nombre;
+    }
+
+
+    /**
+     * Determina si una entidad usuario es de tipo Administrador.
+     */
+    public function esAdmin () {
+        return $this->type === 'administrador';
+    }
+
+    /**
+     * Determina si una entidad usuario es de tipo Vendedor.
+     */
+    public function esVendedor ()
+    {
+        return $this->type === 'vendedor';
+    }
+
+    /**
+     * Determina si una entidad usuario es de tipo Repositor.
+     */
+    public function esRepositor ()
+    {
+        return $this->type === 'repositor';
+    }
+
+
 }
