@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class EsRepositor
 {
@@ -15,9 +16,14 @@ class EsRepositor
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->esRepositor()) {
-            return $next($request);
+        $user = auth()->user();
+        if (Auth::check()) {
+            if($user->esRepositor()) {
+                return $next($request);
+            }
+            else abort(403);
         }
-        return redirect('home');
+        else return redirect()->route('login');
+
     }
 }

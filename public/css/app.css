@@ -1,4 +1,8 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+@import url(https://fonts.cdnfonts.com/css/kaushan-script);
+
+@charset "UTF-8";
+
 
 /*!
  * Bootstrap v4.5.0 (https://getbootstrap.com/)
@@ -36,6 +40,12 @@
   --breakpoint-xl: 1200px;
   --font-family-sans-serif: "Nunito", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.link-kaushan {
+    font-family: 'Kaushan Script', sans-serif !important;
+    font-size: 22px;
+    color: #37474f;
 }
 
 *,
@@ -5003,7 +5013,7 @@ input[type=button].btn-block {
 .card-body {
   flex: 1 1 auto;
   min-height: 1px;
-  padding: 1.25rem;
+  padding: 1rem;
 }
 
 .card-title {
@@ -5028,7 +5038,7 @@ input[type=button].btn-block {
 }
 
 .card-header {
-  padding: 0.75rem 1.25rem;
+  padding: 0.55rem 1.25rem;
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -7071,6 +7081,10 @@ button.bg-dark:focus {
 .bg-white {
   background-color: #fff !important;
 }
+
+.bg-dark {
+    background-color: #eceff1 !important;
+  }
 
 .bg-transparent {
   background-color: transparent !important;

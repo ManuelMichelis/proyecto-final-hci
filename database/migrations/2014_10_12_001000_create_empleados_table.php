@@ -33,10 +33,6 @@ class CreateEmpleadosTable extends Migration
      */
     public function down()
     {
-        // Elimino la restricción de llave foránea en la tabla usuarios para proceder a la eliminación
-        Schema::table('usuarios', function(Blueprint $table) {
-            $table->dropForeign('usuarios_legajo_empleado_foreign');
-        });
         Schema::dropIfExists('empleados');
     }
 }

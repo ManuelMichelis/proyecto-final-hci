@@ -7,16 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     protected $table = 'clientes';
-    protected $primaryKey = 'patente';
-    public $incrementing = false;
+    protected $primaryKey = 'nro';
 
+    public $incrementing = true;
+
+    protected $fillable = [
+        'DNI', 'nombre', 'apellido', 'localidad', 'direccion', 'nacionalidad', 'telefono', 'email', 'id_alquiler',
+    ];
 
     /**
      * Defino la relación cliente-automovil (un cliente puede asociarse a muchos automóviles)
      */
-    public function automoviles ()
+    public function alquileres ()
     {
-        return $this->belongsToMany('App\Automovil', 'alquileres', 'id_cliente', 'patente_automovil')
-            ->withPivot('fecha_inicio', 'fecha_expiracion', 'costo');
+        return $this->hasMany(Alquiler::class, 'id', 'id_alquiler');
     }
+
 }

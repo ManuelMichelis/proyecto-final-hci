@@ -28,6 +28,25 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    /*
+    public function redirectTo()
+    {
+        $user = auth()->user();
+        if ($user->esVendedor()) {
+            $this->redirectTo = route('home_vendedor');
+        }
+        else if ($user->esRepositor()) {
+            $this->redirectTo = route('home_repo');
+        }
+
+        else if ($user->esAdmin()) {
+            $this->redirectTo = route('home_admin');
+        }
+
+        return $this->redirectTo;
+    }
+    */
+
     /**
      * Create a new controller instance.
      *

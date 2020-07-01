@@ -6,20 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Automovil extends Model
 {
+    public $incrementing = false;
+
     protected $table = 'automoviles';
     protected $primaryKey = 'patente';
-    public $incrementing = false;
+    protected $fillable = ['patente', 'marca', 'modelo', 'version', 'color', 'valor', 'estado'];
 
 
     /**
      * Defino la relación automovil-cliente (un automóvil puede asociarse a muchos clientes)
      */
-    public function clientes ()
+    public function alquileres ()
     {
-        return $this->belongsToMany('App\Alquiler', 'pagas', 'patente_automovil', 'id_cliente')
-            ->withPivot('fecha_inicio', 'fecha_expiracion', 'costo');
-        // Agrego a la tabla de la relación ALQUILERES tres atributos adicionales
+        return $this->hasMany(Alquiler::class, 'id', 'id_alquiler');
     }
 
+
+    /**
+     * Determina si el automóvil se encuentra disponible para su alquiler o no
+     */
+    public function estaDisponible () {
+        return $this->estado === 'disponible';
+    }
 
 }

@@ -14,12 +14,16 @@ class CreateAlquileresTable extends Migration
     public function up()
     {
         Schema::create('alquileres', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id')->unique();
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_expiracion');
+            $table->string('estado_al_cierre');
             $table->unsignedDouble('costo');
-            $table->unsignedBigInteger('id_cliente')->unique();
-            $table->string('patente_automovil')->unique();
+            $table->string('patente_automovil')->nullable()->onDelete('cascade');
+            $table->foreign('patente_automovil')->references('patente')->on('automoviles')->onDelete('cascade');
+            $table->unsignedBigInteger('nro_cliente')->nullable()->onDelete('cascade');
+            $table->foreign('nro_cliente')->references('nro')->on('clientes')->onDelete('cascade');
+            $table->unsignedBigInteger('id_embargo_asociado')->nullable()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +35,7 @@ class CreateAlquileresTable extends Migration
      */
     public function down()
     {
+        // Elimino la restricción de llave foránea en la tabla usuarios para proceder a la eliminación
         Schema::dropIfExists('alquileres');
     }
 }

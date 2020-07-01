@@ -7,10 +7,10 @@ use Faker\Generator as Faker;
 
 $factory->define(Empleado::class, function (Faker $faker) {
     return [
-        'nombre' => $faker -> name,
-        'apellido' => $faker -> name,
-        'localidad' => $faker -> name,
-        'direccion' => $faker -> name,
-        'telefono' => $faker -> phoneNumber,
+        'nombre' => $faker->firstName,
+        'apellido' => $faker->lastName,
+        'localidad' => $faker->city,
+        'direccion' => $faker->address,
+        'telefono' => $faker->phoneNumber,
     ];
 });

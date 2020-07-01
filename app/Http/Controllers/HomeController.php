@@ -24,15 +24,19 @@ class HomeController extends Controller
      */
     public function index ()
     {
-        return view('home');
+        $user = auth()->user();
+        $vista = null;
+
+        if ($user->esVendedor()) {
+            $vista = view('home_vendedor');
+        }
+        else if ($user->esRepositor()) {
+            $vista = view('home_repo');
+        }
+        else if ($user->esAdmin()) {
+            $vista = view('home_admin');
+        }
+        return $vista;
     }
-
-
-    public function mostrar ()
-    {
-        $q1 = DB::select('select * from users');
-        return view ('home',compact($q1));
-    }
-
 
 }

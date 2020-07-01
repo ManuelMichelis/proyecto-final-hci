@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 use Closure;
+use Auth;
 
 
 class EsAdmin
@@ -15,9 +16,13 @@ class EsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->esAdmin()) {
-            return $next($request);
+        $user = auth()->user();
+        if (Auth::check()) {
+            if($user->esAdmin()) {
+                return $next($request);
+            }
+            else abort(403);
         }
-        return redirect('home');
+        else return redirect()->route('login');
     }
 }

@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'type', 'legajo',
+        'email', 'password', 'api_token', 'type', 'legajo_empleado',
     ];
 
     /**
@@ -50,13 +50,7 @@ class User extends Authenticatable
 
     public function empleado ()
     {
-        return $this->belongsTo(Empleado::class, 'legajo_empleado', 'legajo');
-    }
-
-
-    public function nombreEmpleado ()
-    {
-        return $this->empleado->nombre;
+        return $this->hasOne(Empleado::class, 'legajo', 'legajo_empleado');
     }
 
 

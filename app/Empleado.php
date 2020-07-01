@@ -20,19 +20,19 @@ class Empleado extends Model
 
     public function user ()
     {
-        return $this->hasOne(User::class, 'email', 'email_usuario');
+        return $this->belongsTo(User::class, 'email_usuario', 'email');
     }
 
 
     public function alquileres ()
     {
-        return $this->hasMany('App\Alquiler', 'gestion_alquileres', 'legajo_vendedor', 'id_alquiler');
+        return $this->hasMany(Alquiler::class, 'id', 'id_alquiler');
     }
 
 
     public function embargos ()
     {
-        return $this->hasMany('App\Alquiler', 'embargos', 'legajo_repositor', 'id_alquiler');
+        return $this->hasMany(Embargo::class, 'id', 'id_embargo');
     }
 
 

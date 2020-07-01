@@ -2,17 +2,18 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model;
+use App\Automovil;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
 $factory->define(Automovil::class, function (Faker $faker) {
     return [
-        'patente' => $faker -> unique() -> Str::random(7),
-        'marca' => $faker -> name,
-        'modelo' => $faker -> name,
-        'version' => $faker -> year,
-        'color' => $faker -> colorName
-        // Revisar si no necesito agregar una restricción adicional para que 'patente' sea clave
+        'patente' => $faker->unique()->regexify('[A-Z]{2,2}[0-9]{3,3}[A-Z]{2,2}'),
+        'marca' => $faker->lastName,
+        'modelo' => $faker->firstName,
+        'version' => $faker->year,
+        'color' => $faker->colorName,
+        'valor' => $faker->numberBetween(80000, 500000),
+        'estado' => 'disponible'
     ];
 });

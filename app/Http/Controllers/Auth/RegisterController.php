@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Empleado;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -30,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -65,7 +66,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         // Registro un nuevo empleado
-
         $empleado = Empleado::create([
             'nombre' => $data['name'],
             'apellido' => $data['apellido'],
@@ -79,15 +79,17 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'type' => $data['type'],
             'password' => Hash::make($data['password']),
+            'api_token' => Str::random(80),
         ]);
 
-        // Asigno el mail del usuario creado al empleado asociado
+        // Asocio el mail de la cuenta de usuario con el mail del empleado
         $empleado->email_usuario = ($usuario->email);
-        // Guardo la pertenencia al empleado sobre el usuario
-        $usuario->empleado()->associate($empleado)->save();
-        // Guardo la pertenencia del usuario en el empleado
-        $empleado->user()->save($usuario);
-        // Guardo los cambios sobre el empleado
+        // Guardo el empleado para que le sea asignado su id.
+        $empleado->save();
+        // Asocio la cuenta de usuario al empleado creado previamente
+        $usuario->legajo_empleado = ($empleado->legajo);
+
+        $usuario->save();
         $empleado->save();
 
         return $usuario;

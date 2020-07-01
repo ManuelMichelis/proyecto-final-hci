@@ -14,9 +14,12 @@ class CreateEmbargosTable extends Migration
     public function up()
     {
         Schema::create('embargos', function (Blueprint $table) {
-            $table->unsignedBigInteger('legajo_repositor')->unique();
-            $table->unsignedBigInteger('id_alquiler')->unique();
+            $table->bigIncrements('id')->unique();
             $table->string('estado');
+            $table->unsignedBigInteger('legajo_repositor')->unique()->nullable();
+            $table->foreign('legajo_repositor')->references('legajo')->on('empleados')->onDelete('cascade');
+            $table->unsignedBigInteger('id_alquiler_incumplido')->unique()->nullable();
+            $table->foreign('id_alquiler_incumplido')->references('id')->on('alquileres')->onDelete('cascade');
             $table->timestamps();
         });
     }

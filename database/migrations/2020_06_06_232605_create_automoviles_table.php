@@ -20,6 +20,7 @@ class CreateAutomovilesTable extends Migration
             $table->unsignedInteger('version');
             $table->string('color');
             $table->unsignedDouble('valor');
+            $table->string('estado');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +18,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+// Implmentación de rutas INICIAL para la API REST: solicitud de login + consultas 'all' por cada modelo
+
+Route::post('/login', 'Auth\AuthController@login');
+
+Route::middleware('auth:api')->get('/usuarios', 'APIController@usuarios');
+Route::middleware('auth:api')->get('/empleados', 'APIController@empleados');
+Route::middleware('auth:api')->get('/clientes', 'APIController@clientes');
+Route::middleware('auth:api')->get('/automoviles', 'APIController@automoviles');
+Route::middleware('auth:api')->get('/alquileres', 'APIController@alquileres');
+Route::middleware('auth:api')->get('/embargos', 'APIController@embargos');
+
