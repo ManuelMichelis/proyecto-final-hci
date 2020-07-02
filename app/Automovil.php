@@ -10,7 +10,7 @@ class Automovil extends Model
 
     protected $table = 'automoviles';
     protected $primaryKey = 'patente';
-    protected $fillable = ['patente', 'marca', 'modelo', 'version', 'color', 'valor', 'estado'];
+    protected $fillable = ['patente', 'marca', 'modelo', 'version', 'color', 'valor', 'estado', 'imagen'];
 
 
     /**

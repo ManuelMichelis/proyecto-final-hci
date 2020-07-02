@@ -28,6 +28,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Para usuario ADMINISTRADOR...
 Route::get('/home/registrar_automovil', 'AdminController@regAutomovil')->name('regAutomovil')->middleware('es_admin');
 Route::post('/home/registrar_automovil', 'AdminController@crearAuto')->name('crearAuto')->middleware('es_admin');
+Route::get('/home/imagen_automovil', 'AdminController@adjuntarImg')->name('adjuntarImg')->middleware('es_admin');
+Route::post('/home/imagen_automovil', 'AdminController@guardarImg')->name('guardarImg')->middleware('es_admin');
 Route::get('/home/revision_usuarios', 'AdminController@consUsuarios')->name('consUsuarios')->middleware('es_admin');
 Route::get('/home/revision_empleados', 'AdminController@consEmpleados')->name('consEmpleados')->middleware('es_admin');
 Route::get('/home/cambiar_estado', 'AdminController@cambiarEstado')->name('cambiarEstado')->middleware('es_admin');

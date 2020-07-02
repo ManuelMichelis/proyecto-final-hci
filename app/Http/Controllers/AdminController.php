@@ -12,6 +12,67 @@ class AdminController extends Controller {
     }
 
     /**
+     * Permite la visualización de la vista para el registro de un nuevo automóvil
+     */
+    public function regAutomovil ()
+    {
+        return view('admin_views/regAutomovil');
+    }
+
+    /**
+     * Crea un nuevo automóvil, a partir de datos suministrados y retorna al home del usuario
+     */
+    public function crearAuto (Request $request)
+    {
+        $automovil = new App\Automovil;
+        $automovil->patente = $request->patente;
+        $automovil->marca = $request->marca;
+        $automovil->modelo = $request->modelo;
+        $automovil->version = $request->version;
+        $automovil->color = $request->color;
+        $automovil->valor = $request->valor;
+        $automovil->estado = 'disponible';
+        $automovil->save();
+        return redirect()->route('home');
+    }
+
+    public function adjuntarImg () {
+        return view('admin_views/adjuntarImg');
+    }
+
+
+    public function guardarImg (Request $request)
+    {
+        $patente = $request->patente;
+        $automovil = App\Automovil::find($patente);
+        error_log("Recuperé el automovil");
+        if ($automovil == null)
+        {
+            $tituloOp = 'Adjuntar imágen a un automóvil';
+            $descError = 'No existe un automóvil registrado con patente: '.$patente.'. Por favor, revise los datos ingresados';
+            return view('reporte_error', compact('tituloOp', 'descError'));
+        }
+        //dd($request->imagen);
+        $request->validate(
+            ['imagen' =>'image|mimes:png,jpg,jpeg,bmp'],
+            []
+        );
+        error_log("Validé la imagen");
+        $imagen = null;
+        if ($request->hasFile('imagen'))
+        {
+            $imagen = base64_encode(file_get_contents($request->file('imagen')));
+        }
+        error_log("Codifiqué en base64 y asigné la codificación a la variable local imagen");
+        $automovil->imagen = $imagen;
+        error_log("Asigné imagen");
+        $automovil->save();
+        error_log("Guardé todo");
+
+        return redirect()->route('home');
+    }
+
+    /**
      * Obtiene todos los usuarios registrados y lo suministra a una vista para su visualización
      */
     public function consUsuarios () {
@@ -25,30 +86,6 @@ class AdminController extends Controller {
     public function consEmpleados () {
         $resultados = App\Empleado::all();
         return view('admin_views/consEmpleados', compact('resultados'));
-    }
-
-    /**
-     * Permite la visualización de la vista para el registro de un nuevo automóvil
-     */
-    public function regAutomovil ()
-    {
-        return view('admin_views/regAutomovil');
-    }
-
-    /**
-     * Crea un nuevo automóvil, a partir de datos suministrados y retorna al home del usuario
-     */
-    public function crearAuto (Request $request) {
-        $automovil = new App\Automovil;
-        $automovil->patente = $request->patente;
-        $automovil->marca = $request->marca;
-        $automovil->modelo = $request->modelo;
-        $automovil->version = $request->version;
-        $automovil->color = $request->color;
-        $automovil->valor = $request->valor;
-        $automovil->estado = 'disponible';
-        $automovil->save();
-        return redirect()->route('home');
     }
 
     /**

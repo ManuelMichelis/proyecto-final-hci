@@ -12,6 +12,6 @@ class AutomovilSeeder extends Seeder
      */
     public function run()
     {
-        factory(Automovil::class, 22)->create();
+        factory(Automovil::class, 12)->create();
     }
 }

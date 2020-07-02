@@ -55,7 +55,7 @@
                         </div>
                         <input name="valor" class="form-control" placeholder="Valor de cotización" pattern="[1-9][0-9]*$">
                     </div>
-                    <br>
+
                     <div class="row justify-content-center">
                         <div class="col-md-9">
                             <div class="form-group">

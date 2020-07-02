@@ -4,19 +4,18 @@
 <div class="container">
     <br>
     <br>
+    <br>
     <div class="row justify-content-center">
         <div class="container section">
             <div class="row justify-content-center">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            <h5>
-                                <div class="md text-center">
-                                    <strong>
-                                        Menú de repositor
-                                    </strong>
-                                </div>
-                            </h5>
+                            <div class="md text-center">
+                                <strong>
+                                    Menú de repositor
+                                </strong>
+                            </div>
                         </div>
                         <div class="card-body">
                             <br>

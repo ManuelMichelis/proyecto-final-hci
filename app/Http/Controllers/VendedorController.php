@@ -109,14 +109,14 @@ class VendedorController extends Controller
                 $alquiler->save();
                 $alquiler->cliente()->associate($cliente);
                 $alquiler->automovil()->associate($automovil);
-                $automovil->estado = 'alquilado';
+                $automovil->estado = 'adquirido';
                 $alquiler->save();
                 $automovil->save();
                 return redirect()->route('home');
             }
             else
             {
-                $descError = 'No existe automóvil registrado con patente: '.$request->patente.'. Por favor, revise los datos ingresados';
+                $descError = 'El automóvil registrado con patente: '.$request->patente.' pertenece a un alquiler vigente. Por favor, revise los datos ingresados';
                 return view('reporte_error', compact('tituloOp', 'descError'));
             }
         }

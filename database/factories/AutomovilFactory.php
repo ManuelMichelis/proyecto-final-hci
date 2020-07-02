@@ -11,9 +11,9 @@ $factory->define(Automovil::class, function (Faker $faker) {
         'patente' => $faker->unique()->regexify('[A-Z]{2,2}[0-9]{3,3}[A-Z]{2,2}'),
         'marca' => $faker->lastName,
         'modelo' => $faker->firstName,
-        'version' => $faker->year,
-        'color' => $faker->colorName,
-        'valor' => $faker->numberBetween(80000, 500000),
-        'estado' => 'disponible'
+        'version' => $faker->numberBetween(2000,2020),
+        'color' => $faker->safeColorName,
+        'valor' => $faker->numberBetween(90000, 500000),
+        'estado' => 'disponible',
     ];
 });

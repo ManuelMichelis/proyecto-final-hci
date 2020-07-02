@@ -32,7 +32,7 @@ class Embargo extends Model
      */
     public function automovilARecuperar ()
     {
-        $this->alquilerAEmbargar->automovil;
+        return $this->alquilerAEmbargar->automovil;
     }
 
     /**

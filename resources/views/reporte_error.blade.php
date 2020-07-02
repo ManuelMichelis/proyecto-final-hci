@@ -30,11 +30,24 @@
     </div>
     <br>
     <br>
-    <div class="row justify-content-center">
-        <div class="col-md-2">
-            <a id="emb_pend" class="btn btn-primary" href="{{route('home')}}" role="button" style="width:100%">
-                Volver a Home
-            </a>
+    <div class="row">
+        <div class="col-6">
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <a id="emb_pend" class="btn btn-primary" href="{{ URL::previous() }}" role="button" style="width:100%">
+                        Reintentar
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <a id="emb_pend" class="btn btn-primary" href="{{route('home')}}" role="button" style="width:100%">
+                        Ir a Home
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
