@@ -7,22 +7,13 @@ use App;
 
 class UsuarioController extends Controller
 {
-    /**
-     * Obtiene todos los clientes registrados y lo suministra a una vista para su visualización
-     */
-    public function consClientes ()
-    {
-        $resultados = App\Cliente::all();
-        return view('/views_compartidas/consClientes', compact('resultados'));
-    }
 
     /**
-     * Obtiene todos los automóviles registrados y lo suministra a una vista para su visualización
+     * Obtiene todos los usuarios registrados y lo suministra a una vista para su visualización
      */
-    public function consAutos ()
-    {
-        $resultados = App\Automovil::all();
-        return view('/views_compartidas/consAutos', compact('resultados'));
+    public function consUsuarios () {
+        $resultados = App\User::all();
+        return view('admin_views/consUsuarios', compact('resultados'));
     }
 
 }

@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         // Primer alquiler: al borde de la orden de embargo
         $alquiler1 = new App\Alquiler;
         $alquiler1->fecha_inicio = now()->modify('- 2 days');
-        $alquiler1->fecha_expiracion = now()->modify('+ 15 minutes');
+        $alquiler1->fecha_expiracion = now()->modify('+ 1 minutes');
         $alquiler1->costo = 2000;
         $alquiler1->estado_al_cierre = 'sin devolucion';
         $alquiler1->save();

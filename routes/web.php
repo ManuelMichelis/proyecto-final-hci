@@ -25,38 +25,59 @@ Auth::routes();
 // Entrada al home en base al rol correspondiente
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Para usuario ADMINISTRADOR...
-Route::get('/home/registrar_automovil', 'AdminController@regAutomovil')->name('regAutomovil')->middleware('es_admin');
-Route::post('/home/registrar_automovil', 'AdminController@crearAuto')->name('crearAuto')->middleware('es_admin');
-Route::get('/home/imagen_automovil', 'AdminController@adjuntarImg')->name('adjuntarImg')->middleware('es_admin');
-Route::post('/home/imagen_automovil', 'AdminController@guardarImg')->name('guardarImg')->middleware('es_admin');
-Route::get('/home/revision_usuarios', 'AdminController@consUsuarios')->name('consUsuarios')->middleware('es_admin');
-Route::get('/home/revision_empleados', 'AdminController@consEmpleados')->name('consEmpleados')->middleware('es_admin');
-Route::get('/home/cambiar_estado', 'AdminController@cambiarEstado')->name('cambiarEstado')->middleware('es_admin');
-Route::get('/home/cerrar_embargo', 'AdminController@cerrarEmbargo')->name('cerrarEmbargo')->middleware('es_admin');
-Route::post('/home/cerrar_embargo/confirmar', 'AdminController@verificarEmb')->name('verificarEmb')->middleware('es_admin');
-Route::post('/home/cerrar_embargo/confirmar/id={id}', 'AdminController@finalizarEmbargo')->name('finalizarEmbargo')->middleware('es_admin');
 
-// Para usuario VENDEDOR...
+// RUTAS PROPIAS DEL ADMINISTRADOR
 
-Route::get('/home/revision_alquileres', 'VendedorController@consAlquileres')->name('consAlquileres')->middleware('es_vendedor');
-Route::get('/home/revision_alquileres/activos', 'VendedorController@alqActivos')->name('alqActivos')->middleware('es_vendedor');
-Route::get('/home/revision_alquileres/historial', 'VendedorController@alqHistorial')->name('alqHistorial')->middleware('es_vendedor');
-Route::get('/home/registrar_cliente', 'VendedorController@regCliente')->name('regCliente')->middleware('es_vendedor');
-Route::post('/home/registrar_cliente','VendedorController@crearCliente')->name('crearCliente')->middleware('es_vendedor');
-Route::get('/home/registrar_alquiler', 'VendedorController@regAlquiler')->name('regAlquiler')->middleware('es_vendedor');
-Route::post('/home/registrar_alquiler', 'VendedorController@crearAlquiler')->name('crearAlquiler')->middleware('es_vendedor');
-Route::get('/home/cierre_alquiler', 'VendedorController@cierreAlquiler')->name('cierreAlquiler')->middleware('es_vendedor');
-Route::post('/home/cerrar_alquiler/confirmar', 'VendedorController@verificarAlq')->name('verificarAlq')->middleware('es_vendedor');
-Route::post('/home/cerrar_alquiler/confirmar/id={id}', 'VendedorController@finalizarAlquiler')->name('finalizarAlquiler')->middleware('es_vendedor');
+Route::middleware(['es_admin'])->group(function () {
+    Route::get('/home/registrar_automovil', 'AdminController@regAutomovil')->name('regAutomovil');
+    Route::get('/home/imagen_automovil', 'AdminController@adjuntarImgAuto')->name('adjuntarImg');
+    Route::get('/home/cerrar_embargo', 'AdminController@cerrarEmbargo')->name('cerrarEmbargo');
 
-// Para usuario REPOSITOR...
+    Route::post('/home/registrar_automovil', 'AutomovilController@crearAuto')->name('crearAuto');
+    Route::post('/home/imagen_automovil', 'AutomovilController@guardarImgAuto')->name('guardarImg');
+    Route::get('/home/revision_usuarios', 'UsuarioController@consUsuarios')->name('consUsuarios');
+    Route::get('/home/revision_empleados', 'EmpleadoController@consEmpleados')->name('consEmpleados');
+    Route::post('/home/cerrar_embargo/confirmar', 'EmbargoController@verificarEmb')->name('verificarEmb');
+    Route::post('/home/cerrar_embargo/confirmar/id={id}', 'EmbargoController@finalizarEmbargo')->name('finalizarEmbargo');
+});
 
-Route::get('/home/embargos_asignados', 'RepositorController@misEmbargos')->name('misEmbargos')->middleware('es_repositor');
-Route::get('/home/revision_embargos', 'RepositorController@consEmbargos')->name('consEmbargos')->middleware('es_repo_admin');
+// RUTAS PROPIAS DEL VENDEDOR
 
+Route::middleware(['es_vendedor'])->group(function () {
+    Route::get('/home/revision_alquileres', 'VendedorController@consAlquileres')->name('consAlquileres');
+    Route::get('/home/registrar_cliente', 'VendedorController@regCliente')->name('regCliente');
+    Route::get('/home/cierre_alquiler', 'VendedorController@cierreAlquiler')->name('cierreAlquiler');
+    Route::get('/home/registrar_alquiler', 'VendedorController@regAlquiler')->name('regAlquiler');
+
+    Route::get('/home/revision_alquileres/activos', 'AlquilerController@alqActivos')->name('alqActivos');
+    Route::get('/home/revision_alquileres/historial', 'AlquilerController@alqHistorial')->name('alqHistorial');
+    Route::post('/home/registrar_alquiler', 'AlquilerController@crearAlquiler')->name('crearAlquiler');
+    Route::post('/home/cerrar_alquiler/confirmar', 'AlquilerController@verificarAlq')->name('verificarAlq');
+    Route::post('/home/cerrar_alquiler/confirmar/id={id}', 'AlquilerController@finalizarAlquiler')->name('finalizarAlquiler');
+    Route::post('/home/registrar_cliente','ClienteController@crearCliente')->name('crearCliente');
+});
+
+// RUTAS PROPIAS DEL REPOSITOR
+
+Route::middleware(['es_repositor'])->group(function () {
+    Route::get('/home/embargos_asignados', 'EmbargoController@misEmbargos')->name('misEmbargos');
+    Route::get('/home/actualizar_embargos', 'EmbargoController@actualizarEmb')->name('actualizarEmb');
+});
+
+// RUTAS COMPARTIDAS REPOSITOR-ADMINISTRADOR
+
+Route::middleware(['es_repo_admin'])->group(function () {
+    Route::get('/home/revision_embargos', 'EmbargoController@consEmbargos')->name('consEmbargos');
+});
 
 // RUTAS COMPARTIDAS POR TODOS LOS USUARIOS
 
-Route::get('/home/revision_clientes', 'UsuarioController@consClientes')->name('consClientes')->middleware('esta_autenticado');
-Route::get('/home/revision_autos', 'UsuarioController@consAutos')->name('consAutos')->middleware('esta_autenticado');
+Route::middleware(['esta_autenticado'])->group(function () {
+    Route::get('/home/revision_clientes', 'ClienteController@consClientes')->name('consClientes');
+    Route::get('/home/revision_autos', 'AutomovilController@consAutos')->name('consAutos');
+});
+
+
+
+
+

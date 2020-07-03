@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="container section">
             <div class="row justify-content-center">
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="card">
                         <div class="card-header">
                             <div class="md text-center">
@@ -26,9 +26,13 @@
                             @endif
                             <div class="container">
                                 <div class="row justify-content-center">
-                                    <div class="col-2">
-                                    </div>
-                                    <div class="col-8">
+                                    <div class="col-md-7">
+                                        <div class="row">
+                                            <a id="emb_hist" class="btn btn-primary" href="{{route('actualizarEmb')}}" role="button" style="width:100%">
+                                                Actualizar órdenes de embargo
+                                            </a>
+                                        </div>
+                                        <br>
                                         <div class="row">
                                             <a id="emb_pend" class="btn btn-primary" href="{{route('misEmbargos')}}" role="button" style="width:100%">
                                                 Mis embargos asignados
@@ -54,7 +58,6 @@
                                         </div>
                                         <br>
                                     </div>
-                                    <div class="col-2"></div>
                                 </div>
                             </div>
                         </div>

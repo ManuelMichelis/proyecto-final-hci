@@ -53,7 +53,7 @@
 
             @else
             <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
+            <div class="col-xs-11 text-center">
                 <br>
                 <br>
                 <div class="alert alert-secondary" role="alert">
