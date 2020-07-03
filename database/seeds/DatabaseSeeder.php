@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         $alquiler1 = new App\Alquiler;
         $alquiler1->fecha_inicio = now()->modify('- 2 days');
         $alquiler1->fecha_expiracion = now()->modify('+ 1 minutes');
-        $alquiler1->costo = 2000;
+        $alquiler1->costo = 2100;
         $alquiler1->estado_al_cierre = 'sin devolucion';
         $alquiler1->save();
         $auto1 = $autosAlq->get(0);
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
         $alquiler1 = new App\Alquiler;
         $alquiler1->fecha_inicio = now()->modify('- 4 days');
         $alquiler1->fecha_expiracion = now()->modify('- 50 minutes');
-        $alquiler1->costo = 2000;
+        $alquiler1->costo = 1900;
         $alquiler1->estado_al_cierre = 'sin devolucion';
         $alquiler1->save();
         $auto1 = $autosAlq->get(2);
