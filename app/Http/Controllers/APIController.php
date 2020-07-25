@@ -87,7 +87,7 @@ class APIController extends Controller
     {
         try
         {
-            $propiedades = App\Automovil::all()->makeHidden(['created_at','updated_at']);
+            $propiedades = App\Automovil::all()->makeHidden(['imagen','created_at','updated_at']);
 
             return response()->json([
                 'status_code' => 200,
