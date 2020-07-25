@@ -87,7 +87,7 @@ class APIController extends Controller
     {
         try
         {
-            $automoviles = App\Automovil::all()->makeHidden('created_at','updated_at');
+            $automoviles = App\Automovil::all()->makeHidden(['created_at','updated_at']);
 
             return response()->json([
                 'status_code' => 200,
