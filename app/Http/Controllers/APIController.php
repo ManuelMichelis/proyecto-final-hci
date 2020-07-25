@@ -87,17 +87,36 @@ class APIController extends Controller
     {
         try
         {
-            $automoviles = App\Automovil::all()->makeHidden(['created_at','updated_at']);
+            $propiedades = App\Automovil::all()->makeHidden(['created_at','updated_at']);
 
             return response()->json([
                 'status_code' => 200,
-                'response' => $automoviles
+                'response' => $propiedades
             ]);
         }
         catch (Exception $error) {
             return response()->json([
                 'status_code' => 500,
-                'response' => '¡Error! No se pudieron recuperar los automoviles'
+                'response' => '¡Error! No se pudieron recuperar las especificaciones de los automoviles'
+            ]);
+        }
+    }
+
+    public function imagenesAutomoviles ()
+    {
+        try
+        {
+            $imagenes = App\Automovil::select('imagen')->get();
+
+            return response()->json([
+                'status_code' => 200,
+                'response' => $imagenes
+            ]);
+        }
+        catch (Exception $error) {
+            return response()->json([
+                'status_code' => 500,
+                'response' => '¡Error! No se pudieron recuperar las imágenes de los automoviles'
             ]);
         }
     }

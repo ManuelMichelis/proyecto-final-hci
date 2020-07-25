@@ -24,6 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', 'Auth\AuthController@login');
 Route::get('/propsAutomoviles', 'APIController@propsAutomoviles');
+Route::get('/imagenesAutomoviles', 'APIController@imagenesAutomoviles');
 
 Route::middleware('auth:api')->get('/usuarios', 'APIController@usuarios');
 Route::middleware('auth:api')->get('/empleados', 'APIController@empleados');
