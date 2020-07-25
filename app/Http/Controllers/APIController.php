@@ -83,6 +83,25 @@ class APIController extends Controller
         }
     }
 
+    public function propsAutomoviles ()
+    {
+        try
+        {
+            $automoviles = App\Automovil::all()->except('created_at','updated_at');
+
+            return response()->json([
+                'status_code' => 200,
+                'response' => $automoviles
+            ]);
+        }
+        catch (Exception $error) {
+            return response()->json([
+                'status_code' => 500,
+                'response' => '¡Error! No se pudieron recuperar los automoviles'
+            ]);
+        }
+    }
+
     public function alquileres ()
     {
         try
