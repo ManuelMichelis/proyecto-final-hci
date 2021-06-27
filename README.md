@@ -1,24 +1,11 @@
-# Proyecto 2:  PHP + Laravel
+# Proyecto final:  Interacción Humano-Computadora
 
-**Fecha de revisión:** 12 de Junio de 2020.
-**Fecha de entrega:** 26 de Junio de 2020.
+## **Concesionario de alquiler de automóviles**
 
-## **Proyecto 2: concesionario de alquiler de automóviles**
-
-El proyecto consiste en la implementación de una aplicación web para la gestión de información correspondiente al inventariado y rentado de vehículos de un concesionario.
+Basado en el Proyecto 2 de Ingeniería de aplicaciones web (https://github.com/ManuelMichelis/proyecto-2-iaw.git), este proyecto consiste en la mejora del diseño de la interfaz gráfica de cada menú de usuario desarrollada hasta su actualización final, junto con la visualización correspondiente a reportes de resultados de una operación y refactorizaciones adicionales.
+A modo de repaso, se describe la aplicación desarrollada en el Proyecto mencionado anteriormente:
 Esta aplicación permitirá mantener registro de cada vehículo con el que cuenta el concesionario, donde cada uno tendrá un estado particular: disponible o alquilado por un cliente. También, se mantendrá información sobre cada cliente del establecimiento, junto con los alquileres que se han efectuado (vigentes y expirados) para todo vehículo. Además, se tendrá registrado a cada ***vendedor*** que trabaja para el concesionario y cada uno de ellos se encargará de la gestión de alquileres. Cada vendedor podrá registrar un nuevo alquiler con un cliente interesado por un determinado vehículo y, de concretarse la renta y pasar a estar registrada en el sistema, también realizar un seguimiento de su estado y de cualquier otro alquiler que se haya efectuado. También este podrá finalizar o dar de baja un alquiler siempre y cuando se presente el cliente involucrado con el vehículo correspondiente, listo para ser devuelto inmediatamente. Para un alquiler expirado, en caso de que el vehículo involucrado aún no se haya devuelto al concesionario, se creará un registro de embargo en el sistema. Este embargo será vinculado a dicho alquiler y será asociado a un ***repositor*** particular. Los repositores también son parte de la planta de trabajo del concesionario, por lo que se mantendrá un registro de cada uno de ellos en el sistema. Un repositor puede consultar los embargos vigentes e históricos de todo el concesionario, ya sean aquellos asignados a él mismo o no. En caso de ser requerido un embargo y este ser luego concretado, el repositor comunicará al ***administrador*** sobre la recuperación y este último modificará el estado del vehículo para dar por finalizado el embargo y el anterior pase a estar en revisión. El administrador puede acceder y modificar toda la información del sistema y, en particular, será quién pueda incorporar vehículos a la planta, sean nuevos o recuperados de un embargo.
 Cada empleado de la planta, sea ***vendedor***, ***repositor*** o ***administrador***, tendrá una cuenta propia en el sistema. Cada uno se asignará un rol al momento de registrarse en el sistema.
 
 ### **Aplicación Heroku:** https://sunshine-autos.herokuapp.com
-
-### **Link al video de presentación:** https://www.youtube.com/watch?v=bTYuzoBXZ6s 
-Producto de un inconveniente que tuve al desarrollar una cierta funcionalidad sobre el registro de embargos que requería un addon Heroku que es pago (lo supe una vez finalizada toda la implementación pertinente), me vi obligado a realizar una implenentación alternativa. Al final del video, explico la idea original para el proyecto. Por ello, lamentablemente me excedí en el largo máximo permitido para el video para poder comentar lo ocurrido y mostrar el código implementado.
-
-### **Implementación de API REST: pruebas**
-
-Utilizando la aplicación Postman, es necesario llevar adelante los pasos siguientes para el comienzo de la prueba:
-
-1. Se abre una nueva pestaña para la realización de solicitudes HTTP. Trabajaremos puntualmente con solicitudes de tipo GET y POST.
-2. Para realizar solicitudes por cualquiera de las colecciones de entidades, será necesario obtener el *token de acceso* (access_token). Para ello, realizamos una solicitud POST para el login del estilo POST https://sunshine-autos.herokuapp.com/api/login. Así, se obtendrá el token en cuestión. Para el header de la solicitud, añadimos un campo adicional con clave "Authorization" y valor "Bearer [API Token]". Para el cuerpo, cosideramos el formato *form-data*, y agregamos las claves adicionales "email" y "password" con valores correspondientes a un email y contraseña que correspondan a un usuario registrado en el sistema.
-3. Obtenido el resultado de la solicitud POST anterior, deberíamos obtener el código de estado 200 junto con el atributo *access_token* y *token_type*. Tomamos el contenido del token (sin considerar las comillas dobles) y lo agregamos como valor de la clave "Authorization" en el encabezado, respetando la forma "Bearer <access_token>".
-4. Ahora, se pueden realizar solicitudes GET por cualquiera de las entidades del sistema: *usuario, empleado, cliente, automóvil, alquiler* y *embargo*. En cada caso, deberá respetarse la solicitud sobre una URL de forma https://sunshine-autos.herokuapp.com/api/<nombre_entidad_en_plural>. Así, se obtendrá como respuesta un archivo JSON que contendrá el código de estado 200, junto con el atributo response, quien contendrá la colección de todas las existencias en el sistema de la entidad particular sobre la cual se haya consultado. Ejemplo de solicitudes: GET https://sunshine-autos.herokuapp.com/api/automoviles.
+### **Link al video de presentación del Proyecto 2:** https://www.youtube.com/watch?v=bTYuzoBXZ6s
