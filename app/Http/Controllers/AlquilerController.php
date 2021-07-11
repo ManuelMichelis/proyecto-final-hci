@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Rules\ReglaPatente;
+use App\Rules\ReglaNombre;
+use App\Rules\ReglaNatural;
+use App\Rules\ReglaDinero;
 use App;
 use Datetime;
 
 class AlquilerController extends Controller
 {
+
 
     /**
      * Obtiene todos los alquileres activos registrados y lo suministra a una vista para su visualización
@@ -15,10 +20,11 @@ class AlquilerController extends Controller
     public function alqActivos ()
     {
         $fechaActual = new DateTime;
-        $strFecha = $fechaActual->format('Y-m-d H:i:s');
+        $strFecha = $fechaActual->format('d/m/Y H:i:s');
         $resultados = App\Alquiler::whereDate('fecha_expiracion','>',$strFecha)->get();
-        return view('/vendedor_views/alquileresAct', compact('resultados', 'strFecha'));
+        return view('/vendedor_views/alq-activos', compact('resultados', 'strFecha'));
     }
+
 
     /**
      * Obtiene todos los alquileres registrados y lo suministra a una vista para su visualización
@@ -26,8 +32,9 @@ class AlquilerController extends Controller
     public function alqHistorial ()
     {
         $resultados = App\Alquiler::all();
-        return view('/vendedor_views/alquileresHist', compact('resultados'));
+        return view('/vendedor_views/alq-historial', compact('resultados'));
     }
+
 
     /**
      * Crea un nuevo alquiler, de ser posible, para un cliente y automóvil dados, a partir de un N°y patente
@@ -35,25 +42,37 @@ class AlquilerController extends Controller
      */
     public function crearAlquiler (Request $request)
     {
+        $titulo = 'Registro de nuevo alquiler';
+        $validacion = $this->validate($request,[
+            'N°' => new ReglaNatural,
+            'patente' => new ReglaPatente,
+            'dias' => new ReglaNatural,
+            'costo' => new ReglaDinero
+        ]);
         // Obtengo el cliente y verifico si existe
-        $cliente = App\Cliente::where('nro',$request->nro)->get()->first();
-        $tituloOp = 'Registro de nuevo alquiler';
+        $nro = $request->N°;
+        $cliente = App\Cliente::where('nro', $nro)->first();
         if ($cliente == null)
         {
-            $descError = 'No existe cliente registrado con ID: '.$request->nro.' Por favor, revise los datos ingresados';
-            return view('reporte_error', compact('tituloOp', 'descError'));
+            $error = 'No existe cliente registrado con ID: '.$nro;
+            return view('reporte-fallo')
+                ->with('titulo', $titulo)
+                ->with('error', $error);
         }
         // Obtengo el automóvil y verifico si existe
-        $automovil = App\Automovil::where('patente',$request->patente)->get()->first();
-        if ($automovil == null)
+        $patente = $request->patente;
+        $vehiculo = App\Automovil::where('patente', $patente)->first();
+        if ($vehiculo == null)
         {
-            $descError = 'No existe automóvil registrado con patente: '.$request->patente.'. Por favor, revise los datos ingresados';
-            return view('reporte_error', compact('tituloOp', 'descError'));
+            $error = 'No existe automóvil registrado con patente: '.$patente;
+            return view('reporte-fallo')
+                ->with('titulo', $titulo)
+                ->with('error', $error);
         }
         else
         {
             // Si el automóvil está disponible, procedo al registro del alquiler
-            if ($automovil->estaDisponible())
+            if ($vehiculo->estaDisponible())
             {
                 $dias = $request->dias;
                 $fechaActual = new DateTime;
@@ -66,52 +85,73 @@ class AlquilerController extends Controller
                 $alquiler->estado_al_cierre = 'sin devolucion';
                 $alquiler->costo = $request->costo;
                 $alquiler->save();
+                $vendedor = auth()->user()->empleado;
+                $alquiler->vendedorACargo()->associate($vendedor);
                 $alquiler->cliente()->associate($cliente);
-                $alquiler->automovil()->associate($automovil);
-                $automovil->estado = 'adquirido';
+                $alquiler->vehiculo()->associate($vehiculo);
+                $vehiculo->estado = 'adquirido';
                 $alquiler->save();
-                $automovil->save();
-                return redirect()->route('home');
+                $vehiculo->save();
+                $reporte = 'Se ha registrado un alquiler para el cliente con N° '.$nro.', por el vehículo con patente '.$patente;
+                return view('reporte-exito')
+                    ->with('titulo', $titulo)
+                    ->with('reporte', $reporte);
             }
             else
             {
-                $descError = 'El automóvil registrado con patente: '.$request->patente.' pertenece a un alquiler vigente. Por favor, revise los datos ingresados';
-                return view('reporte_error', compact('tituloOp', 'descError'));
+                $error = 'El automóvil registrado con patente: '.$patente.' no está disponible para ser alquilado';
+                return view('reporte-fallo')
+                    ->with('titulo', $titulo)
+                    ->with('error', $error);
             }
         }
     }
+
 
     /**
      * Verifica la existencia del alquiler activo que se desea finalizar, a partir de un ID
      */
     public function verificarAlq (Request $request) {
         $id = $request->id;
-        $fechaActual = new DateTime();
-        $strFecha = $fechaActual->format('d/m/Y H:i:s');
-        $alquiler = App\Alquiler::where('id',$id)
+        $strFecha = now()->format('d/m/Y, H:i');
+        $alquiler = App\Alquiler::where('id', $id)
                     ->whereDate('fecha_expiracion','>',$strFecha)
                     ->get()
                     ->first();
         if ($alquiler == null) {
-            $tituloOp = 'Cierre de alquiler para un cliente';
-            $descError = 'No existe un alquiler activo, con ID: '.$id.', registrado en el sistema. Por favor, revise los datos ingresados';
-            return view('reporte_error', compact('tituloOp', 'descError'));
+            $titulo = 'Finalización de un alquiler';
+            $error = 'No existe un alquiler activo, con ID: '.$id.', registrado en el sistema';
+            return view('reporte-fallo')
+                ->with('titulo', $titulo)
+                ->with('error', $error);
         }
-        return view('/vendedor_views/confirmarCierreAlq', compact('alquiler','id'));
+        return view('/vendedor_views/confirmar-cierre-alq')
+            ->with('id', $id)
+            ->with('alquiler', $alquiler);
     }
+
 
     /**
      * Cierra un alquiler activo, seteando la fecha de expiración por su cierre y liberando el automóvil
      */
-    public function finalizarAlquiler ($id) {
-        $alquiler = App\Alquiler::find($id);
-        $automovil = $alquiler->automovil;
+    public function concretarCierreAlq ($id) {
+        $alquiler = App\Alquiler::where('id', $id)->first();
+        $vehiculo = $alquiler->automovil;
+        $cliente = $alquiler->cliente;
+        // Seteo el estado del alquiler al cierre, el estado del vehículo y la fecha de expiración
         $alquiler->estado_al_cierre = 'con devolucion';
-        $automovil->estado = "disponible";
-        $automovil->save();
-        $alquiler->fecha_expiracion = new DateTime;
+        $vehiculo->estado = "disponible";
+        $vehiculo->save();
+        $fechaActual = new DateTime;
+        $strFecha = $fechaActual->format('d/m/Y H:i:s');
         $alquiler->save();
-        return redirect()->route('home');
+        // Reporto el éxito de la operación
+        $titulo = "Finalización de un alquiler";
+        $reporte = 'Se cerró el alquiler '.$id.', por un vehículo '.
+            $vehiculo->nombre().' (Patente: '.$vehiculo->patente.')';
+        return view('reporte-exito')
+            ->with('titulo', $titulo)
+            ->with('reporte', $reporte);
     }
 
 }

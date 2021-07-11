@@ -11,9 +11,10 @@ class UsuarioController extends Controller
     /**
      * Obtiene todos los usuarios registrados y lo suministra a una vista para su visualización
      */
-    public function consUsuarios () {
+    public function consultarUsuarios () {
         $resultados = App\User::all();
-        return view('admin_views/consUsuarios', compact('resultados'));
+        return view('admin_views/consultar-usuarios')
+            ->with('resultados', $resultados);
     }
 
 }

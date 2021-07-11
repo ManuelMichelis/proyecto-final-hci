@@ -10,10 +10,11 @@ class ClienteController extends Controller
     /**
      * Obtiene todos los clientes registrados y lo suministra a una vista para su visualización
      */
-    public function consClientes ()
+    public function consultarClientes ()
     {
         $resultados = App\Cliente::all();
-        return view('/views_compartidas/consClientes', compact('resultados'));
+        return view('/views_compartidas/consultar-clientes')
+            ->with('resultados', $resultados);
     }
 
     /**

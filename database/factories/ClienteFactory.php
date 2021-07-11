@@ -12,7 +12,7 @@ $factory->define(Cliente::class, function (Faker $faker) {
         'apellido' => $faker->lastName,
         'localidad' => $faker->city,
         'direccion' => $faker->streetAddress,
-        'nacionalidad' => $faker->country,
+        'nacionalidad' => 'United States',
         'telefono' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
     ];

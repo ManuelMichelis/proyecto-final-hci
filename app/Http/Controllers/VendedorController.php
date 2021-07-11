@@ -11,15 +11,15 @@ class VendedorController extends Controller
      */
     public function regCliente ()
     {
-        return view('/vendedor_views/regCliente');
+        return view('/vendedor_views/registrar-cliente');
     }
 
     /**
      * Permite la visualización de la vista para seleccionar una consulta particular sobre alquileres
      */
-    public function consAlquileres ()
+    public function consultarAlquileres ()
     {
-        return view('/vendedor_views/consAlquileres');
+        return view('/vendedor_views/consultar-alq');
     }
 
     /**
@@ -27,7 +27,7 @@ class VendedorController extends Controller
      */
     public function regAlquiler ()
     {
-        return view('/vendedor_views/regAlquiler');
+        return view('/vendedor_views/alta-alquiler');
     }
 
     /**
@@ -35,7 +35,7 @@ class VendedorController extends Controller
      */
     public function cierreAlquiler ()
     {
-        return view('/vendedor_views/cerrarAlquiler');
+        return view('/vendedor_views/cerrar-alquiler');
     }
 
 }

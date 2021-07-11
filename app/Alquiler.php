@@ -15,16 +15,17 @@ class Alquiler extends Model
         'fecha_inicio', 'fecha_expiracion', 'costo', 'patente_automovil', 'nro_cliente', 'id_embargo_asociado',
     ];
 
+
     /**
-     * Defino una relación alquiler-automovil (un alquiler involucra a un único automóvil)
+     * Defino una relación alquiler-vehículo (un alquiler involucra a un único automóvil)
      */
-    public function automovil ()
+    public function vehiculo ()
     {
         return $this->belongsTo(Automovil::class, 'patente_automovil', 'patente');
     }
 
     /**
-     * Defino una relación alquiler-automovil (un alquiler involucra a un único automóvil)
+     * Defino una relación alquiler-cliente (un alquiler involucra a un único cliente)
      */
     public function cliente ()
     {
@@ -36,7 +37,7 @@ class Alquiler extends Model
      */
     public function vendedorACargo ()
     {
-        return $this->belongsTo(Empleado::class, 'legajo_vendedor', 'legajo');
+        return $this->belongsTo(Empleado::class, 'legajo_vendedor');
     }
 
     /**
@@ -44,7 +45,7 @@ class Alquiler extends Model
      */
     public function embargoAsociado ()
     {
-        return $this->hasOne(Embargo::class, 'id', 'id_embargo_asociado');
+        return $this->hasOne(Embargo::class, 'id_embargo_asociado', 'id_alquiler_incumplido');
     }
 
 }

@@ -10,8 +10,9 @@ class EmpleadoController extends Controller
     /**
      * Obtiene todos los empleados registrados y lo suministra a una vista para su visualización
      */
-    public function consEmpleados () {
+    public function consultarEmpleados () {
         $resultados = App\Empleado::all();
-        return view('admin_views/consEmpleados', compact('resultados'));
+        return view('admin_views/consultar-empleados')
+            ->with('resultados', $resultados);
     }
 }

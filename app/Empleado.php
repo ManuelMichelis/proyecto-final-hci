@@ -26,13 +26,17 @@ class Empleado extends Model
 
     public function alquileres ()
     {
-        return $this->hasMany(Alquiler::class, 'id', 'id_alquiler');
+        return $this->hasMany(Alquiler::class, 'legajo_vendedor', 'legajo');
     }
 
 
     public function embargos ()
     {
-        return $this->hasMany(Embargo::class, 'id', 'id_embargo');
+        return $this->hasMany(Embargo::class, 'legajo_repositor', 'legajo');
+    }
+
+    public function nombreCompleto () {
+        return $this->nombre." ".$this->apellido;
     }
 
 

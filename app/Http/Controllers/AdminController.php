@@ -15,14 +15,14 @@ class AdminController extends Controller {
      */
     public function regAutomovil ()
     {
-        return view('admin_views/regAutomovil');
+        return view('admin_views/alta-vehiculo');
     }
 
     /**
      * Permite la visualización de la vista para adjuntar una foto a un automóvil particular
      */
-    public function adjuntarImgAuto () {
-        return view('admin_views/adjuntarImg');
+    public function adjuntarImg () {
+        return view('admin_views/adjuntar-img');
     }
 
     /**
@@ -30,7 +30,7 @@ class AdminController extends Controller {
      */
     public function cerrarEmbargo ()
     {
-        return view('admin_views/cerrarEmbargo');
+        return view('admin_views/cerrar-embargo');
     }
 
 }

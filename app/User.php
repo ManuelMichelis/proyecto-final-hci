@@ -77,5 +77,10 @@ class User extends Authenticatable
         return $this->type === 'repositor';
     }
 
+    public function rol () {
+        $rol = $this->type;
+        return ucfirst($rol);
+    }
+
 
 }

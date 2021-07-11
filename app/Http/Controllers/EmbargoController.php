@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Rules\ReglaNatural;
 use App;
 
 class EmbargoController extends Controller
@@ -17,16 +18,19 @@ class EmbargoController extends Controller
         $embargos = App\Embargo::where('legajo_repositor', '=', $usuario->legajo_empleado)
                     ->where('estado','=','pendiente')
                     ->get();
-        return view('/repo_views/misEmbargos',compact('embargos'));
+        return view('/repo_views/mis-embargos',compact('embargos'));
     }
 
     /**
      * Obtiene todos los embargos registrados y lo suministra a una vista para su visualización
      */
-    public function consEmbargos ()
+    public function consultarEmbargos ()
     {
         $embargos = App\Embargo::all();
-        return view('/repo_views/consEmbargos',compact('embargos'));
+        $stringFecha = now()->format('d/m/Y, H:i');
+        return view('/repo_views/consultar-embargos')
+            ->with('embargos', $embargos)
+            ->with('strFecha', $stringFecha);
     }
 
     /**
@@ -53,7 +57,8 @@ class EmbargoController extends Controller
             $alq->id_embargo_asociado = $id_emb;
             $alq->save();
         }
-        return view('/repo_views/embActualizados', compact('alquileres'));
+        return view('/repo_views/embargos-actualizados')
+            ->with('alquileres', $alquileres);
     }
 
     /**
@@ -61,30 +66,53 @@ class EmbargoController extends Controller
      */
     public function verificarEmb (Request $request)
     {
+        $validacion = $this->validate($request,[
+            "id" => new ReglaNatural,
+        ]);
         $id = $request->id;
         $embargo = App\Embargo::where('id',$id)
                     ->where('estado','pendiente')
                     ->get()
                     ->first();
         if ($embargo == null) {
-            $tituloOp = 'Cierre de un embargo';
-            $descError = 'No existe un embargo pendiente, con ID: '.$id.', registrado en el sistema. Por favor, revise los datos ingresados';
-            return view('reporte_error', compact('tituloOp', 'descError'));
+            $titulo = 'Finalización de un embargo';
+            $error = 'No existe embargo pendiente con ID: '.$id.' registrado en el sistema';
+            return view('reporte_error')
+                ->with('titulo', $titulo)
+                ->with('error', $error);
         }
-        return view('/admin_views/confirmarCierreEmb', compact('embargo','id'));
+        $vehiculoARecuperar = $embargo->vehiculoARecuperar();
+        $clienteInvolucrado = $embargo->clienteInvolucrado();
+        return view('/admin_views/confirmar-cierre-emb')
+            ->with('embargo', $embargo)
+            ->with('id', $id)
+            ->with('vehiculo', $vehiculoARecuperar)
+            ->with('cliente', $clienteInvolucrado);
     }
 
     /**
-     * Cierra un embargo pendiente, seteando su estado como finalizado y liberando al automóvil involucrado
+     * Cierra un embargo pendiente, seteando su estado como finalizado y liberando al vehículo involucrado
      */
-    public function finalizarEmbargo ($id) {
+    public function concretarCierreEmb ($id) {
         $embargo = App\Embargo::find($id);
+        /*
+        // Seteo el estado de finalización para el embargo y el estado del vehículo
         $embargo->estado = 'finalizado';
-        $automovil = $embargo->automovilARecuperar();
-        $automovil->estado = 'disponible';
-        $automovil->save();
+        */
+        $vehiculo = $embargo->vehiculoARecuperar();
+        /*
+        $vehiculo->estado = 'disponible';
+        $vehiculo->save();
         $embargo->save();
-        return redirect()->route('home');
+        // Reporto el éxito de la operación
+        */
+        $alquiler = $embargo->alquilerIncumplido;
+        $titulo = "Finalización de un embargo";
+        $reporte = 'Se cerró el embargo con ID: '.$id.' realizado sobre el alquiler de ID: '.
+            $alquiler->id.'. Se recuperó un vehículo '.$vehiculo->nombre().' con patente '.$vehiculo->patente;
+        return view('reporte-exito')
+            ->with('titulo', $titulo)
+            ->with('reporte', $reporte);
     }
 
 }

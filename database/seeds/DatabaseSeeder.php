@@ -17,9 +17,10 @@ class DatabaseSeeder extends Seeder
 
         // Creo cuatro alquileres y un embargo pendiente
 
-        // Obtengo cuatro clientes y automóviles al azar
+        // Obtengo cuatro clientes y vehículos al azar
         $clientesAlq = App\Cliente::all()->random(4);
         $autosAlq = App\Automovil::all()->random(4);
+        $usersAlq = App\User::where('type','vendedor')->get()->random(6);
 
         // Primer alquiler: al borde de la orden de embargo
         $alquiler1 = new App\Alquiler;
@@ -30,8 +31,10 @@ class DatabaseSeeder extends Seeder
         $alquiler1->save();
         $auto1 = $autosAlq->get(0);
         $cliente1 = $clientesAlq->get(0);
+        $vendedor1 = $usersAlq->get(0)->empleado;
+        $alquiler1->vendedorACargo()->associate($vendedor1);
         $alquiler1->cliente()->associate($cliente1);
-        $alquiler1->automovil()->associate($auto1);
+        $alquiler1->vehiculo()->associate($auto1);
         $auto1->estado = 'adquirido';
         $alquiler1->save();
         $auto1->save();
@@ -45,8 +48,10 @@ class DatabaseSeeder extends Seeder
         $alquiler1->save();
         $auto1 = $autosAlq->get(1);
         $cliente1 = $clientesAlq->get(1);
+        $vendedor1 = $usersAlq->get(1)->empleado;
+        $alquiler1->vendedorACargo()->associate($vendedor1);
         $alquiler1->cliente()->associate($cliente1);
-        $alquiler1->automovil()->associate($auto1);
+        $alquiler1->vehiculo()->associate($auto1);
         $auto1->estado = 'disponible';
         $alquiler1->save();
         $auto1->save();
@@ -60,8 +65,10 @@ class DatabaseSeeder extends Seeder
         $alquiler1->save();
         $auto1 = $autosAlq->get(2);
         $cliente1 = $clientesAlq->get(2);
+        $vendedor1 = $usersAlq->get(2)->empleado;
+        $alquiler1->vendedorACargo()->associate($vendedor1);
         $alquiler1->cliente()->associate($cliente1);
-        $alquiler1->automovil()->associate($auto1);
+        $alquiler1->vehiculo()->associate($auto1);
         $auto1->estado = 'adquirido';
         $alquiler1->save();
         $auto1->save();
@@ -86,8 +93,10 @@ class DatabaseSeeder extends Seeder
         $alquiler1->save();
         $auto1 = $autosAlq->get(3);
         $cliente1 = $clientesAlq->get(3);
+        $vendedor1 = $usersAlq->get(3)->empleado;
+        $alquiler1->vendedorACargo()->associate($vendedor1);
         $alquiler1->cliente()->associate($cliente1);
-        $alquiler1->automovil()->associate($auto1);
+        $alquiler1->vehiculo()->associate($auto1);
         $auto1->estado = 'adquirido';
         $alquiler1->save();
         $auto1->save();

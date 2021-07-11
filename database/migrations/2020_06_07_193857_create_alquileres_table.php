@@ -19,6 +19,7 @@ class CreateAlquileresTable extends Migration
             $table->dateTime('fecha_expiracion');
             $table->string('estado_al_cierre');
             $table->unsignedDouble('costo');
+            $table->unsignedBigInteger('legajo_vendedor')->nullable();
             $table->string('patente_automovil')->nullable()->onDelete('cascade');
             $table->foreign('patente_automovil')->references('patente')->on('automoviles')->onDelete('cascade');
             $table->unsignedBigInteger('nro_cliente')->nullable()->onDelete('cascade');

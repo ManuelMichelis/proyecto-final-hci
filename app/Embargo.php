@@ -12,35 +12,35 @@ class Embargo extends Model
 
 
     /**
-     * Defino una relación alquiler-automovil (un alquiler involucra a un único automóvil)
+     * Defino una relación alquiler-vehículo (un alquiler involucra a un único automóvil)
      */
     public function repositorACargo ()
     {
-        return $this->belongsTo(Empleado::class, 'legajo_repositor', 'legajo');
+        return $this->belongsTo(Empleado::class, 'legajo_repositor');
     }
 
     /**
-     * Defino una relación alquiler-automovil (un alquiler involucra a un único automóvil)
+     * Defino una relación alquiler-vehículo (un alquiler involucra a un único automóvil)
      */
-    public function alquilerAEmbargar ()
+    public function alquilerIncumplido ()
     {
-        return $this->belongsTo(Alquiler::class, 'id_alquiler_incumplido', 'id');
+        return $this->belongsTo(Alquiler::class, 'id_alquiler_incumplido');
     }
 
     /**
-     *  Retorna la instancia de automóvil asociada al embargo
+     *  Retorna la instancia de vehículo asociada al embargo
      */
-    public function automovilARecuperar ()
+    public function vehiculoARecuperar ()
     {
-        return $this->alquilerAEmbargar->automovil;
+        return $this->alquilerIncumplido->vehiculo;
     }
 
     /**
      *  Retorna la instancia de cliente asociada al embargo
      */
-    public function clienteAEmbargar ()
+    public function clienteInvolucrado ()
     {
-        $this->alquilerAEmbargar->cliente;
+        return $this->alquilerIncumplido->cliente;
     }
 
 }

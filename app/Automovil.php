@@ -18,7 +18,12 @@ class Automovil extends Model
      */
     public function alquileres ()
     {
-        return $this->hasMany(Alquiler::class, 'id', 'id_alquiler');
+        return $this->hasMany(Alquiler::class, 'patente_automovil', 'patente');
+    }
+
+
+    public function nombre () {
+        return $this->marca." ".$this->modelo;
     }
 
 

@@ -28,13 +28,13 @@ class HomeController extends Controller
         $vista = null;
 
         if ($user->esVendedor()) {
-            $vista = view('home_vendedor');
+            $vista = view('home-vendedor');
         }
         else if ($user->esRepositor()) {
-            $vista = view('home_repo');
+            $vista = view('home-repo');
         }
         else if ($user->esAdmin()) {
-            $vista = view('home_admin');
+            $vista = view('home-admin');
         }
         return $vista;
     }

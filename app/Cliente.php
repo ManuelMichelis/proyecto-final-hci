@@ -15,12 +15,17 @@ class Cliente extends Model
         'DNI', 'nombre', 'apellido', 'localidad', 'direccion', 'nacionalidad', 'telefono', 'email', 'id_alquiler',
     ];
 
+
+    public function nombreCompleto () {
+        return $this->nombre." ".$this->apellido;
+    }
+
     /**
      * Defino la relación cliente-automovil (un cliente puede asociarse a muchos automóviles)
      */
     public function alquileres ()
     {
-        return $this->hasMany(Alquiler::class, 'id', 'id_alquiler');
+        return $this->hasMany(Alquiler::class, 'nro_cliente', 'nro');
     }
 
 }
