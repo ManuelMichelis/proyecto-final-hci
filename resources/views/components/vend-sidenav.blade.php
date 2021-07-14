@@ -73,7 +73,7 @@
                 </li>
                 <li>
                     <a href="{{route('alqHistorial')}}" role="button">
-                        <i class="fas fa-archive"></i>
+                        <i class="far fa-archive"></i>
                         &nbsp;
                         Historial de alquileres
                     </a>

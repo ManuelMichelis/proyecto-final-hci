@@ -22,7 +22,7 @@
                         <th scope="col">Inicio</th>
                         <th scope="col">Expiración</th>
                         <th scope="col">Vehículo adquirido</th>
-                        <th scope="col">Cliente</th>
+                        <th scope="col">Cliente interesado</th>
                         <th scope="col">Costo diario</th>
                         <th scope="col">Estado al cierre</th>
 
@@ -70,7 +70,7 @@
 
                             <!-- MODALS PARA LA FILA -->
 
-                            <!-- Modal para detalles del repositor -->
+                            <!-- Modal para detalles del vendedor -->
                             <div class="modal fade" id="dt-vend{{ $alq->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">

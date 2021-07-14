@@ -8,9 +8,9 @@
         </b>
     </h4>
 
-    <div class="d-flex justify-content-center">        
-        <div class="d-flex flex-column">            
-            <div class="m-3">
+    <div class="d-flex justify-content-center">
+        <div class="d-flex flex-column">
+            <div class="m-4">
                 <form method="POST" action="{{ route('crearAuto') }}">
                     @csrf
                     <div class="form-group input-group">
@@ -21,7 +21,7 @@
                         </div>
                         <input name="patente" class="form-control" placeholder="Patente">
                     </div>
-    
+
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -30,7 +30,7 @@
                         </div>
                         <input name="marca" class="form-control" placeholder="Marca" type="text">
                     </div>
-    
+
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -39,16 +39,16 @@
                         </div>
                         <input name="modelo" class="form-control" placeholder="Modelo" type="text">
                     </div>
-    
+
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i class="far fa-calendar-day"></i>
                             </span>
                         </div>
-                        <input name="version" class="form-control" placeholder="Año de versión" pattern="[1-9][0-9]*$">
+                        <input name="version" class="form-control" placeholder="Año de versión">
                     </div>
-    
+
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -57,16 +57,16 @@
                         </div>
                         <input name="color" class="form-control" placeholder="Color" type="text">
                     </div>
-    
+
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i class="fas fa-sack-dollar"></i>
                             </span>
                         </div>
-                        <input name="valor" class="form-control" placeholder="Valor de cotización" pattern="[1-9][0-9]*$">
+                        <input name="valor" class="form-control" placeholder="Valor de cotización">
                     </div>
-                        
+
                     <div class="row justify-content-center">
                         <div class="col-md-9">
                             <div class="form-group">
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </form>
-            </div>            
+            </div>
         </div>
     </div>
 
@@ -91,8 +91,8 @@
                     </div>
                 </div>
             @endif
-        </div>       
+        </div>
     </div>
-    
+
 
 @endsection

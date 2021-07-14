@@ -11,7 +11,7 @@ class VendedorController extends Controller
      */
     public function regCliente ()
     {
-        return view('/vendedor_views/registrar-cliente');
+        return view('/vendedor_views/alta-cliente');
     }
 
     /**

@@ -47,7 +47,7 @@
         </li>
         <li>
             <a href="{{route('consClientes')}}" role="button">
-                <i class="fad fa-users fa-2x"></i>
+                <i class="fad fa-user-friends fa-2x"></i>
                 &nbsp;
                 Revisión de clientes
             </a>

@@ -112,6 +112,9 @@ class AlquilerController extends Controller
      * Verifica la existencia del alquiler activo que se desea finalizar, a partir de un ID
      */
     public function verificarAlq (Request $request) {
+        $validacion = $this->validate($request,[
+            'id' => new ReglaNatural,
+        ]);
         $id = $request->id;
         $strFecha = now()->format('d/m/Y, H:i');
         $alquiler = App\Alquiler::where('id', $id)
@@ -136,7 +139,7 @@ class AlquilerController extends Controller
      */
     public function concretarCierreAlq ($id) {
         $alquiler = App\Alquiler::where('id', $id)->first();
-        $vehiculo = $alquiler->automovil;
+        $vehiculo = $alquiler->vehiculo;
         $cliente = $alquiler->cliente;
         // Seteo el estado del alquiler al cierre, el estado del vehículo y la fecha de expiración
         $alquiler->estado_al_cierre = 'con devolucion';
